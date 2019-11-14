@@ -9,20 +9,13 @@ CREATE TABLE users (
   CONSTRAINT user_id PRIMARY KEY (user_id)
 );
 
-CREATE TABLE rooms (
-  room_id INTEGER NOT NULL AUTO_INCREMENT,
-  name VARCHAR(30) NOT NULL,
-  CONSTRAINT room_id PRIMARY KEY (room_id)
-);
-
 CREATE TABLE messages (
   message_id INTEGER NOT NULL AUTO_INCREMENT,
   text VARCHAR(140) NOT NULL,
   created_at TIMESTAMP NOT NULL,
   updated_at TIMESTAMP NOT NULL,
-  room_id INTEGER NOT NULL,
+  room VARCHAR(50) NOT NULL,
   user_id INTEGER NOT NULL,
-  FOREIGN KEY (room_id) REFERENCES rooms(room_id),
   FOREIGN KEY (user_id) REFERENCES users(user_id),
   CONSTRAINT message_id PRIMARY KEY (message_id)
 );
