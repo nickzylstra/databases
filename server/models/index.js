@@ -58,21 +58,21 @@ module.exports = {
     get: function () { },
     post: function (username, response) {
       getUserId(username, response).then((userId) => {
-        debugger;
+        response.writeHead(200, headers);
+        response.end('User already exists');
+      }
+      ).catch((err) => {
         var queryString = `INSERT INTO users(name) VALUES ("${username}")`;
         var callback = (err, results, fields) => {
-          // debugger;
+          debugger;
           if (err) {
             response.writeHead(400, headers);
             response.end(err);
           }
           response.writeHead(201, headers);
-          response.end('succsessfully created new user');
+          response.end('Succsessfully created new user');
         };
         dbConnection.query(queryString, callback);
-      }
-      ).catch((err) => {
-        // TODO
       });
     }
   }
