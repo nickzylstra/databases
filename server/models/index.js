@@ -1,4 +1,5 @@
 var { dbConnection } = require('../db');
+var moment = require('moment');
 // const Promise = require('bluebird');
 
 const headers = {
@@ -25,8 +26,17 @@ const getUserId = (username) => {
 
 module.exports = {
   messages: {
-    get: function () {
-      let queryString;
+    get: function (data, response) {
+      let queryString = 'SELECT * from messages';
+      let callback = (err, results, fields) => {
+        if (err) {
+          response.writeHead(400, headers);
+          response.end('bad request could not get messages');
+        }
+        response.writeHead(200, headers);
+        response.end(JSON.stringify(results));
+      };
+
       dbConnection.query(queryString, callback);
     }, // a function which produces all the messages
     post: function ({ username, message, roomname }, response) {
@@ -48,7 +58,7 @@ module.exports = {
 
           dbConnection.query(queryString, callback);
         })
-        .catch( (err) => {
+        .catch((err) => {
           response.writeHead(400, headers);
           response.end(err);
         });
@@ -60,7 +70,9 @@ module.exports = {
 
   users: {
     // Ditto as above.
-    get: function () { },
+    get: function () {
+      // get users ????
+    },
     post: function (username, response) {
       getUserId(username).then((userId) => {
         response.writeHead(200, headers);

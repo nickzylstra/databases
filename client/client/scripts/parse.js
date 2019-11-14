@@ -1,6 +1,6 @@
 var Parse = {
 
-  server: 'http://localhost:3000/classes',
+  server: 'http://localhost:3000/classes/messages',
 
   create: function (message, successCB, errorCB = null) {
 
